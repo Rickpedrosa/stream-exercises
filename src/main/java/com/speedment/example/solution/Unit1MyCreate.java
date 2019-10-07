@@ -2,9 +2,12 @@ package com.speedment.example.solution;
 
 import com.speedment.example.unit.Unit1Create;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -12,41 +15,41 @@ public final class Unit1MyCreate implements Unit1Create {
 
     @Override
     public Stream<String> newStreamOfAToC() {
-        return Stream.empty();
+        return Stream.of("A", "B", "C");
     }
 
     @Override
     public IntStream newIntStreamOfOneToSeven() {
-        return IntStream.empty();
+        return IntStream.of(1, 2, 3, 4, 5, 6, 7);
     }
 
     @Override
     public Stream<String> from(String[] array) {
-        return Stream.empty();
+        return Arrays.stream(array);
     }
 
     @Override
     public Stream<String> from(Collection<String> collection) {
-        return Stream.empty();
+        return collection.stream();
     }
 
     @Override
     public IntStream from(String s) {
-        return IntStream.empty();
+        return s.chars();
     }
 
     @Override
     public IntStream infiniteAlternating() {
-        return IntStream.empty();
+        return IntStream.iterate(1, operand -> -1 * operand);
     }
 
     @Override
     public IntStream infiniteRandomInts(Random rnd) {
-        return IntStream.empty();
+        return rnd.ints();
     }
 
     @Override
     public Stream<String> linesFromPoemTxtFile() throws IOException {
-        return Stream.empty();
+        return new BufferedReader(new FileReader(Unit1Create.FILE_NAME)).lines();
     }
 }
