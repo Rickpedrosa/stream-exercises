@@ -3,6 +3,9 @@ package com.speedment.example.solution;
 import com.speedment.example.unit.Unit3Terminal;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.*;
@@ -11,42 +14,42 @@ public final class Unit3MyTerminal implements Unit3Terminal {
 
     @Override
     public void addToSet(Stream<String> stream, Set<String> set) {
-
+        stream.forEach(set::add);
     }
 
     @Override
     public void addToListInOrder(Stream<String> stream, List<String> list) {
-
+        stream.forEachOrdered(list::add);
     }
 
     @Override
     public Set<String> collectToSet(Stream<String> stream) {
-        return emptySet();
+        return stream.collect(Collectors.toSet());
     }
 
     @Override
     public List<String> collectToList(Stream<String> stream) {
-        return emptyList();
+        return stream.collect(Collectors.toList());
     }
 
     @Override
     public String collectJoining(Stream<String> stream) {
-        return null;
+        return stream.collect(Collectors.joining("->"));
     }
 
     @Override
     public String[] toArray(Stream<String> stream) {
-        return new String[0];
+        return stream.toArray(String[]::new);
     }
 
     @Override
     public Map<String, Integer> collectToMap(Stream<String> stream) {
-        return emptyMap();
+        return stream.collect(Collectors.toMap(s -> s, String::length));
     }
 
     @Override
     public int countCharacters(Stream<String> stream) {
-        return 0;
+        return stream.mapToInt(String::length).reduce(0, Integer::sum);
     }
 
     @Override
