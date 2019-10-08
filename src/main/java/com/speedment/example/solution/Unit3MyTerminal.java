@@ -3,8 +3,7 @@ package com.speedment.example.solution;
 import com.speedment.example.unit.Unit3Terminal;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.IntFunction;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,27 +53,28 @@ public final class Unit3MyTerminal implements Unit3Terminal {
 
     @Override
     public int maxWordLen(Stream<String> stream) {
-        return 0;
+        return stream.mapToInt(String::length).max().orElse(0);
     }
 
     @Override
     public IntSummaryStatistics statistics(Stream<String> stream) {
-        return new IntSummaryStatistics();
+        return stream.mapToInt(String::length).summaryStatistics();
     }
 
     @Override
     public Optional<String> findLongestString(Stream<String> stream) {
-        return Optional.empty();
+        return stream.max(Comparator.comparingInt(String::length));
     }
 
     @Override
     public Map<Integer, List<String>> wordsGroupedByLength(Stream<String> stream) {
-        return emptyMap();
+        return stream.collect(Collectors.toMap(String::length, Collections::singletonList,
+                (strings, strings2) -> new ArrayList<>(Arrays.asList(strings.get(0), strings2.get(0)))));
     }
 
     @Override
     public Map<Integer, Long> wordsGroupedByLengthCounted(Stream<String> stream) {
-        return emptyMap();
+        return stream.collect(Collectors.groupingBy(String::length, Collectors.counting()));
     }
 
 }

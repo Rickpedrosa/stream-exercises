@@ -119,7 +119,7 @@ final class Unit3MyTerminalTest {
         }
         if (a.getAverage() == b.getAverage()) {
             return;
-        };
+        }
         Assertions.assertEquals(a, b);
     }
 
